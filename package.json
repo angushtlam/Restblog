@@ -1,0 +1,27 @@
+{
+  "name": "restblog",
+  "version": "1.0.0",
+  "description": "A simple and customizable RESTful webserver for blogs.",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "supervisor": "^0.12.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev-start": "supervisor index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angushtlam/Restblog.git"
+  },
+  "author": "Angus Lam <angushtlam@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/angushtlam/Restblog/issues"
+  },
+  "homepage": "https://github.com/angushtlam/Restblog#readme"
+}
