@@ -5,11 +5,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-  name: String,
-  username: { type: String, unique: true },
-  password: String,
-  createdAt: { type: Date, default: Date.now },
-  lastActive: { type: Date, default: Date.now },
+  username: { type: String, index: true },
+  expiry: Date,
   isAdmin: Boolean
 });
 

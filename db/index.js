@@ -1,10 +1,11 @@
 // Library imports.
 const mongoose = require('mongoose');
 
-// Constants
-const MONGO_DB_URI = 'mongodb://localhost/restblog';
+// Custom imports
+const configJson = require('../config.json');
 
-mongoose.connect(MONGO_DB_URI);
+// Constants
+mongoose.connect(configJson.mongoDbUri);
 const db = mongoose.connection;
 
 console.log('Initiating database connection...'.yellow);

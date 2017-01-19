@@ -1,11 +1,16 @@
 // Library imports.
 const mongoose = require('mongoose');
+const sha256 = require('js-sha256');
 
 // Custom imports.
+const configJson = require('../config.json');
 const db = require('../db');
 const Article = require('../db/models/article');
 const Page = require('../db/models/page');
 const User = require('../db/models/user');
+
+// Constants
+const secretKey = configJson.secretKey;
 
 db.once('open', function () {
   // Wipe old database first.
@@ -15,19 +20,19 @@ db.once('open', function () {
   new User({
     name: 'Alex Karino',
     username: 'alex',
-    password: 'password'
+    password: sha256('password' + secretKey)
   }).save((err, obj) => { err ? console.log(err) : console.log('User ' + obj.name + ' created.'); });
 
   new User({
     name: 'Bob Marley',
     username: 'bob',
-    password: 'password'
+    password: sha256('password' + secretKey)
   }).save((err, obj) => { err ? console.log(err) : console.log('User ' + obj.name + ' created.'); });
 
   new User({
     name: 'Cave Johnson',
     username: 'cave',
-    password: 'password'
+    password: sha256('password' + secretKey)
   }).save((err, obj) => { err ? console.log(err) : console.log('User ' + obj.name + ' created.'); });
 
   new Article({

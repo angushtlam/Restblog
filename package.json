@@ -4,8 +4,10 @@
   "description": "A simple and customizable RESTful webserver for blogs.",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.16.0",
     "colors": "^1.1.2",
     "express": "^4.14.0",
+    "js-sha256": "^0.3.2",
     "mongoose": "^4.7.7"
   },
   "devDependencies": {
@@ -13,7 +15,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "dev-start": "supervisor --no-restart-on success index.js",
+    "dev": "supervisor --no-restart-on success index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

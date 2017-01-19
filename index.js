@@ -1,4 +1,5 @@
 // Library imports.
+const bodyParser = require('body-parser');
 const colors = require('colors');
 const express = require('express');
 
@@ -14,6 +15,9 @@ const PORT = 3000;
 
 // Initiate Express app.
 const app = express();
+
+// Load external middlewares
+app.use(bodyParser.json());
 
 // Load routes that the app uses.
 app.use('/', index);
