@@ -1,9 +1,16 @@
-// Library Imports
+// Library imports.
+const colors = require('colors');
 const express = require('express');
 
-// Custom Imports
+// Custom imports.
+const db = require('./db');
+
+// Route imports.
 const api = require('./routes/api');
 const index = require('./routes/index');
+
+// Constants
+const PORT = 3000;
 
 // Initiate Express app.
 const app = express();
@@ -12,8 +19,9 @@ const app = express();
 app.use('/', index);
 app.use('/api', api);
 
-// Listen to port
-const port = 3000;
-app.listen(port, function () {
-  console.log('App listening on port ' + port + '.');
+// Wait for database connection.
+db.once('open', function() {
+  app.listen(PORT, function () {
+    console.log(('Database connected. App now listening on port ' + PORT + '.').green);
+  });
 });
