@@ -3,10 +3,17 @@
   "version": "1.0.0",
   "description": "A simple and customizable RESTful webserver for blogs.",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "babel-plugin-transform-react-jsx-img-import": "^0.1.4",
+    "babel-preset-react": "^6.22.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-router": "^3.0.2"
+  },
   "devDependencies": {
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
     "body-parser": "^1.16.0",
     "clean-webpack-plugin": "^0.1.15",
     "colors": "^1.1.2",
@@ -29,7 +36,7 @@
     "client:dev-once": "webpack --progress --colors --env development",
     "client:dev": "nodemon --watch webpack.config.js --exec \"webpack --progress --colors --watch --env development\"",
     "server:start": "node index.js",
-    "server:dev": "nodemon index.js",
+    "server:dev": "nodemon --ignore 'public/*' index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

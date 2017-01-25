@@ -1,4 +1,4 @@
-exports.loadStyles = function (paths, minify) {
+exports.loadStyles = function (minify) {
   return {
     module: {
       rules: [

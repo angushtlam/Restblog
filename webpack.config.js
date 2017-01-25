@@ -8,6 +8,7 @@ const assets = require('./webpack/assets');
 const build = require('./webpack/build');
 
 const paths = {
+  admin: path.join(__dirname, 'client', 'admin'),
   app: path.join(__dirname, 'client', 'app'),
   build: path.join(__dirname, 'public'),
   root: __dirname
@@ -16,6 +17,7 @@ const paths = {
 const config = merge([
   {
     entry: {
+      admin: paths.admin,
       app: paths.app
     },
     output: {
@@ -23,7 +25,17 @@ const config = merge([
       filename: 'static/[name].js'
     },
     plugins: [
-      new HtmlWebpackPlugin({ title: 'Test' })
+      new HtmlWebpackPlugin({
+        chunks: ['admin'],
+        filename: 'admin.html',
+        template: 'ejs/admin.ejs',
+        title: 'Restblog Admin'
+      }),
+      new HtmlWebpackPlugin({
+        chunks: ['app'],
+        filename: 'index.html',
+        template: 'ejs/index.ejs',
+        title: 'Restblog' })
     ]
   },
   build.clean(paths.build, { root: paths.root })
@@ -40,7 +52,8 @@ module.exports = function (env) {
       return merge([
         config,
         { plugins: [ new webpack.NamedModulesPlugin() ] },
-        assets.loadStyles(paths.app, false)
+        assets.loadStyles(false),
+        build.transpileBabel()
       ]);
   }
 };

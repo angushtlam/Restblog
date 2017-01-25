@@ -54,17 +54,9 @@ exports.transpileBabel = function () {
       rules: [
         {
           test: /\.js$/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              cacheDirectory: true,
-              presets: [
-                'react',
-                ['es2015', { 'modules': false }]],
-              plugins: [
-                'babel-plugin-transform-react-jsx-img-import' // JSX now doesn't need 50 variables.
-              ]
-            }
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true
           },
           exclude: /node_modules/
         }
