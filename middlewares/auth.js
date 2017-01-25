@@ -7,9 +7,9 @@ function isAdminAuthenticated(req, res, next) {
     } else if (q.expiry < new Date()) {
       res.json({ responseCode: 'ERROR', responseMessage: 'Access key expired.' });
     } else if (!q.isAdmin) {
-      res.json({ responseCode: 'ERROR', responseMessage: 'User is missing permission.' });
+      res.json({ responseCode: 'ERROR', responseMessage: 'User does not have permission.' });
     } else {
-      req.locals.username = q.username;
+      res.locals.username = q.username;
       next();
     }
   });
@@ -22,7 +22,7 @@ function isUserAuthenticated(req, res, next) {
     } else if (q.expiry < new Date()) {
       res.json({ responseCode: 'ERROR', responseMessage: 'Access key expired.' });
     } else {
-      req.locals.username = q.username;
+      res.locals.username = q.username;
       next();
     }
   });

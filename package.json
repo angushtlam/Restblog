@@ -3,19 +3,33 @@
   "version": "1.0.0",
   "description": "A simple and customizable RESTful webserver for blogs.",
   "main": "index.js",
-  "dependencies": {
-    "body-parser": "^1.16.0",
-    "colors": "^1.1.2",
-    "express": "^4.14.0",
-    "js-sha256": "^0.3.2",
-    "mongoose": "^4.7.7"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "supervisor": "^0.12.0"
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "body-parser": "^1.16.0",
+    "clean-webpack-plugin": "^0.1.15",
+    "colors": "^1.1.2",
+    "css-loader": "^0.26.1",
+    "eslint": "^3.14.0",
+    "eslint-plugin-react": "^6.9.0",
+    "express": "^4.14.0",
+    "html-webpack-plugin": "^2.26.0",
+    "js-sha256": "^0.3.2",
+    "mongoose": "^4.7.7",
+    "node-sass": "^4.3.0",
+    "nodemon": "^1.11.0",
+    "sass-loader": "^4.1.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.2.0",
+    "webpack-merge": "^2.4.0"
   },
   "scripts": {
-    "start": "node index.js",
-    "dev": "supervisor --no-restart-on success index.js",
+    "client:build": "webpack --env production",
+    "client:dev-once": "webpack --progress --colors --env development",
+    "client:dev": "nodemon --watch webpack.config.js --exec \"webpack --progress --colors --watch --env development\"",
+    "server:start": "node index.js",
+    "server:dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

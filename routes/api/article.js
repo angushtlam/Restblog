@@ -15,45 +15,47 @@ router.get('/get/:id', function (req, res) {
   const findId = req.params.id;
 
   Article.findOne({ '_id': findId, 'isPublished': true }).lean().exec(function (err, q) {
-    res.json(q);
+    q ? res.json(q) : res.json({});
   });
 });
 
+// Pushes a new article to the blog.
 router.post('/push', isAdminAuthenticated, function (req, res) {
   const findId = req.body.id ? req.body.id : titleToUrlSafeId(req.body.title);
+  const createdAt = req.body.createdAt ? new Date(req.body.createdAt) : new Date();
 
-  Article.findOne({ '_id': findId }).lean().exec(function (err, q) {
-    if (!q) {
-      res.json({ responseCode: 'ERROR', responseMessage: 'An article with the same ID already exists. Please delete it first.' });
+  new Article({
+    _id: findId,
+    title: req.body.title,
+    subtitle: req.body.subtitle,
+    author: res.locals.username,
+    body: req.body.body,
+    createdAt: createdAt,
+    lastUpdated: req.body.lastUpdated ? req.body.lastUpdated : createdAt,
+    isPublished: req.body.isPublished
+
+  }).save((err) => {
+    if (err) {
+      if (err.name === 'MongoError' && err.code === 11000) {
+        res.json({ responseCode: 'ERROR', responseMessage: 'An article with the same ID already exists. Please delete it first.' });
+      } else {
+        res.json({ responseCode: 'ERROR', responseMessage: 'Unknown database error: ' + err.code + '.' });
+      }
     } else {
-      const createdAt = req.body.createdAt ? new Date(req.body.createdAt) : new Date();
-      const article = new Article({
-        _id: findId,
-        title: req.body.title,
-        subtitle: req.body.subtitle,
-        author: req.locals.username,
-        body: req.body.body,
-        createdAt: createdAt,
-        lastUpdated: req.body.lastUpdated ? req.body.lastUpdated : createdAt,
-        isPublished: req.body.isPublished
-      });
-
-      article.save((err) => {
-        err && console.log(err);
-        res.json({ responseCode: 'SUCCESS', responseMessage: 'The article is successfully created.' });
-      });
+      res.json({ responseCode: 'SUCCESS', responseMessage: 'The article is successfully created.' });
     }
   });
 });
 
+// Deletes an article by its ID.
 router.post('/delete/:id', isAdminAuthenticated, function (req, res) {
   const findId = req.params.id;
 
   Article.findByIdAndRemove({ '_id': findId }).lean().exec(function (err, q) {
-    if (q == []) {
+    if (!q) {
       res.json({ responseCode: 'ERROR', responseMessage: 'You cannot delete an article that does not exist.' });
     } else {
-      res.json({ responseCode: 'SUCCESS', responseMessage: 'An article is successfully deleted.' });
+      res.json({ responseCode: 'SUCCESS', responseMessage: 'The article is successfully deleted.' });
     }
   });
 });

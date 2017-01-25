@@ -2,6 +2,7 @@
 const bodyParser = require('body-parser');
 const colors = require('colors');
 const express = require('express');
+const path = require('path');
 
 // Custom imports.
 const db = require('./db');
@@ -18,6 +19,9 @@ const app = express();
 
 // Load external middlewares
 app.use(bodyParser.json());
+
+// Handle static files
+app.use('/static', express.static(path.join(__dirname, 'public', 'static')));
 
 // Load routes that the app uses.
 app.use('/', index);
