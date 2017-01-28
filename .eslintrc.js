@@ -43,7 +43,7 @@ module.exports = {
     ],
     "no-console": 0,
     "react/prop-types": [
-      "warn",
+      "off",
       {
         ignore: ["children"]
       }
