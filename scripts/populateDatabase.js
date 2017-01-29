@@ -21,7 +21,7 @@ db.once('open', function () {
     name: 'Alex Karino',
     username: 'alex',
     password: sha256('password' + secretKey),
-    isAdmin: true,
+    isAdmin: true
   }).save((err, obj) => { err ? console.log(err) : console.log('User ' + obj.name + ' created.'); });
 
   new User({

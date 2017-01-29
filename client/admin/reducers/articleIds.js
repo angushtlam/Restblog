@@ -2,7 +2,7 @@ import { RECEIVE_ALL_ARTICLE_IDS, REQUEST_ALL_ARTICLE_IDS } from '../actions/art
 
 function articleIds(state = {
   isFetching: false,
-  isInvalidated: false,
+  isInvalidated: true,
   articles: null
 }, action) {
   switch (action.type) {

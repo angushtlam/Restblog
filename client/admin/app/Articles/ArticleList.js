@@ -16,7 +16,9 @@ class ArticleList extends Component {
     if (!this.props.articleIds.articles) return ( <li>Loading...</li> );
 
     return this.props.articleIds.articles.map((articleId) => {
-      return ( <li key={ articleId }>{ articleId }</li> );
+      const d = this.props.articleData[articleId];
+
+      return ( <li key={ articleId }>{ d ? d.title : articleId }</li> );
     });
   }
 }

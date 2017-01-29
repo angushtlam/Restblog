@@ -4,7 +4,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import { IndexRoute, Router, Route, hashHistory } from 'react-router';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
+import persistState from 'redux-localstorage';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 // import { createHistory } from 'history';
@@ -21,13 +22,19 @@ import Articles from './app/Articles';
 // const history = useRouterHistory(createHistory)({
 //   basename: '/admin'
 // });
+
+const enhancer = compose(
+  persistState()
+);
+
 const loggerMiddleware = createLogger();
 const store = createStore(
   reducers,
   applyMiddleware(
     thunkMiddleware,
     loggerMiddleware
-  )
+  ),
+  enhancer
 );
 
 render(

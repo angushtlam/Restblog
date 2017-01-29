@@ -2,7 +2,6 @@ import fetch from 'isomorphic-fetch';
 
 export const RECEIVE_ALL_ARTICLE_IDS = 'RECEIVE_ALL_ARTICLE_IDS';
 export function receiveAllArticleIds(resp) {
-  console.log(resp);
   return {
     type: RECEIVE_ALL_ARTICLE_IDS,
     articleIds: resp,

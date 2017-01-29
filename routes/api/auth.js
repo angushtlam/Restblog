@@ -31,7 +31,7 @@ router.post('/validate', function (req, res) {
       session.save((err) => {
         err && console.log(err);
         res.json({ accessKey: session._id });
-        
+
       });
     }
   });

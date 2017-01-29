@@ -15,7 +15,7 @@ router.get('/get/:id', function (req, res) {
   const findId = req.params.id;
 
   Article.findOne({ '_id': findId, 'isPublished': true }).lean().exec(function (err, q) {
-    q ? res.json(q) : res.json({});
+    q ? res.json(q) : res.json({ _id: findId, isPublished: false });
   });
 });
 

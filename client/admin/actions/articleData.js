@@ -4,7 +4,15 @@ export const RECEIVE_ARTICLE_DATA = 'RECEIVE_ARTICLE_DATA';
 export function receiveArticleData(resp) {
   return {
     type: RECEIVE_ARTICLE_DATA,
-    articleIds: resp.data
+    articleId: resp._id,
+    author: resp.author,
+    body: resp.body,
+    createdAt: resp.createdAt,
+    isPublished: resp.isPublished,
+    lastUpdated: resp.lastUpdated,
+    receivedAt: new Date(),
+    subtitle: resp.subtitle,
+    title: resp.title
   };
 }
 
@@ -21,8 +29,8 @@ export function fetchArticleData(articleId) {
     dispatch(requestArticleData(articleId));
 
     return fetch('/api/article/get/' + articleId)
-      .then((response) => { return response.json(); })
-      .then((json) => { dispatch(receiveArticleData(json)); console.log(json); })
+      .then((resp) => { return resp.json(); })
+      .then((json) => { dispatch(receiveArticleData(json)); })
       .catch(() => { console.log('Error in fetching data for Article ' + articleId + '.'); });
   };
 }
