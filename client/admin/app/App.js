@@ -1,7 +1,6 @@
 // Import libraries
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 
 // Import Redux
@@ -48,10 +47,7 @@ class App extends Component {
     return (
       <div>
         <Header></Header>
-        <div className='container'>
-          <Link to='/'><h1>Restblog Dashboard</h1></Link>
-          { this.props.children }
-        </div>
+        { this.props.children }
       </div>
     );
   }

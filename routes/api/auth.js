@@ -56,10 +56,24 @@ router.post('/validate', function (req, res) {
     if (!q) {
       res.json({ responseCode: 'ERROR', responseMessage: 'Access key invalid. Please sign in again.' });
     } else {
-      res.json({ responseCode: 'SUCCESS' });
+      res.json({ responseCode: 'SUCCESS', responseMessage: 'Access key is valid.' });
     }
   });
 });
+
+router.post('/invalidate', function (req, res) {
+  const findAccessKey = req.body.accessKey;
+
+  Session.findOne({ 'accessKey': findAccessKey }).remove(function (err, q) {
+    if (!q) {
+      res.json({ responseCode: 'ERROR', responseMessage: 'Access key invalid.' });
+    } else {
+      res.json({ responseCode: 'SUCCESS', responseMessage: 'Access key is now invalidated.' });
+    }
+  });
+});
+
+
 
 // Export the router for use in the Express app.
 module.exports = router;
