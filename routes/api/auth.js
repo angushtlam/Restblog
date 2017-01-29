@@ -23,6 +23,7 @@ router.post('/verify', function (req, res) {
       res.json({ responseCode: 'ERROR', responseMessage: 'User details invalid.' });
     } else {
       const msToExpire = req.body.longerSession ? 2592000000 : 86400000; // 30 days vs 1 day.
+      const isAdmin = q.isAdmin;
 
       // Remove all older entries of user.
       Session.find({ 'username': findUsername }).remove((err, q) => {
@@ -35,7 +36,7 @@ router.post('/verify', function (req, res) {
             accessKey: sha256(new mongoose.Types.ObjectId() + secretKey),
             username: findUsername,
             expiry: new Date((+new Date) + msToExpire),
-            isAdmin: q.isAdmin
+            isAdmin: isAdmin
           });
           session.save((err) => {
             err && console.log(err);

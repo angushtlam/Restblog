@@ -16,31 +16,29 @@ class Auth extends Component {
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
   }
 
-  componentWillMount() {
-    // Clear data if the user is not authenticated, just in case.
-    // this.props.invalidateArticleIds();
-    // this.props.invalidateArticleData();
-  }
-
   render() {
     return (
-      <div>
-        <h3>You are unauthorized. Please log in.</h3>
-        <form onSubmit={ this.handleLoginSubmit }>
-          <label>
-            Username
-            <input type="text" name="username" ref={ (input) => this.username = input } />
-          </label>
-          <br />
+      <div className='auth'>
+        <div className='content'>
+          <h1 className='logo'>Restblog</h1>
+          <p>Restricted Access</p>
 
-          <label>
-            Password
-          <input type="password" name="password" ref={ (input) => this.password = input } />
-          </label>
-          <br />
+          <form onSubmit={ this.handleLoginSubmit }>
+            <label>
+              Username
+              <input type='text' name='username' ref={ (input) => this.username = input } />
+            </label>
+            <br />
 
-          <input type="submit" value="Login" />
-        </form>
+            <label>
+              Password
+            <input type='password' name='password' ref={ (input) => this.password = input } />
+            </label>
+            <br />
+
+            <button className='button button-outline' type='submit'>Login</button>
+          </form>
+        </div>
       </div>
     );
   }

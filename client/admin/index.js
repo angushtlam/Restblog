@@ -15,10 +15,13 @@ import reducers from './reducers';
 
 // Import custom components
 import App from './app/App';
-import Dashboard from './app/Dashboard';
 import Articles from './app/Articles';
 import ArticleList from './app/Articles/ArticleList';
 import Article from './app/Articles/Article';
+import Dashboard from './app/Dashboard';
+import Pages from './app/Pages';
+import PageList from './app/Pages/PageList';
+import Page from './app/Pages/Page';
 
 // Can use when the server is set up with rerouting.
 // const history = useRouterHistory(createHistory)({
@@ -47,6 +50,10 @@ render(
         <Route path='/articles' component={Articles}>
           <IndexRoute component={ArticleList}></IndexRoute>
           <Route path='/article/:articleId' component={Article}></Route>
+        </Route>
+        <Route path='/pages' component={Pages}>
+          <IndexRoute component={PageList}></IndexRoute>
+          <Route path='/page/:pageId' component={Page}></Route>
         </Route>
       </Route>
     </Router>

@@ -35,7 +35,7 @@ export function fetchAllArticleIds() {
 }
 
 export function shouldFetchAllArticleIds(state) {
-  const articleIds = state.articlesById;
+  const articleIds = state.articleIds;
   if (!articleIds) return true;
   else if (articleIds.isFetching()) return false;
   else return articleIds.isInvalidated();

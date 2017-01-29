@@ -1,0 +1,33 @@
+@import "variables";
+
+.auth {
+  align-items: center;
+  background-color: $color-primary;
+  color: $color-initial;
+  display: flex;
+  height: 100%;
+
+  .content {
+    margin: 0 auto;
+    padding: $padding;
+
+    form {
+      max-width: 60rem;
+
+      input {
+        border-color: $color-initial;
+        color: $color-initial;
+      }
+
+      button {
+        border-color: $color-initial;
+        color: $color-initial;
+      }
+    }
+
+    .logo {
+      font-size: 8.6rem;
+      font-weight: 700;
+    }
+  }
+}

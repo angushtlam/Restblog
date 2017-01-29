@@ -11,7 +11,7 @@ const schema = new Schema({
   author: String,
   body: String,
   createdAt: { type: Date, default: Date.now },
-  lastUpdated: [{ type: Date, default: Date.now }],
+  lastUpdated: { type: Date, default: Date.now },
   isPublished: Boolean
 });
 

@@ -2,11 +2,11 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-class Articles extends React.Component {
+class Pages extends React.Component {
   render() {
     return (
       <div className='container'>
-        <Link className='float-right' to='/articles'>View All Articles</Link>
+        <Link className='float-right' to='/pages'>View All Pages</Link>
 
         { this.props.children }
       </div>
@@ -14,4 +14,4 @@ class Articles extends React.Component {
   }
 }
 
-export default Articles;
+export default Pages;

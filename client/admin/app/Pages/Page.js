@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-class Article extends Component {
+class Page extends Component {
   render() {
-    const articleId = this.props.params['articleId'];
-    const d = this.props.articleData[articleId];
+    const pageId = this.props.params['pageId'];
+    const d = this.props.pageData[pageId];
 
     if (d) {
       return (
@@ -14,7 +14,7 @@ class Article extends Component {
           <h3>{ d.title }</h3>
           <h4>{ d.subtitle }</h4>
           <p>
-            Article ID: <em>{ articleId }</em><br />
+            Page ID: <em>{ pageId }</em><br />
             Author: <em>{ d.author }</em><br />
             Published: <em>{ d.isPublished ? 'Yes' : 'No' }</em><br />
             Created At: <em>{ new Date(d.createdAt).toString() }</em><br />
@@ -30,8 +30,8 @@ class Article extends Component {
 
     return (
       <div>
-        <h3>This article does not exist.</h3>
-        <p>Would you like to create it? <Link to='/articles/create'>Create this article.</Link></p>
+        <h3>This page does not exist.</h3>
+        <p>Would you like to create it? <Link to='/pages/create'>Create this page.</Link></p>
       </div>
     );
   }
@@ -39,8 +39,8 @@ class Article extends Component {
 
 function mapStateToProps(state) {
   return {
-    articleData: state.articleData
+    pageData: state.pageData
   };
 }
 
-export default connect(mapStateToProps)(Article);
+export default connect(mapStateToProps)(Page);

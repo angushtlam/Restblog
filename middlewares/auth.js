@@ -1,7 +1,7 @@
 const Session = require('../db/models/session');
 
 function isAdminAuthenticated(req, res, next) {
-  Session.findOne({ _id: req.body.accessKey }).lean().exec(function (err, q) {
+  Session.findOne({ accessKey: req.body.accessKey }).lean().exec(function (err, q) {
     if (!q) {
       res.json({ responseCode: 'ERROR', responseMessage: 'Invalid access key.' });
     } else if (q.expiry < new Date()) {
@@ -16,7 +16,7 @@ function isAdminAuthenticated(req, res, next) {
 }
 
 function isUserAuthenticated(req, res, next) {
-  Session.findOne({ _id: req.body.accessKey }).lean().exec(function (err, q) {
+  Session.findOne({ accessKey: req.body.accessKey }).lean().exec(function (err, q) {
     if (!q) {
       res.json({ responseCode: 'ERROR', responseMessage: 'Invalid access key.' });
     } else if (q.expiry < new Date()) {

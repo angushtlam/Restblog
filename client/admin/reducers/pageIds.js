@@ -1,31 +1,31 @@
 import {
-  RECEIVE_ALL_ARTICLE_IDS,
-  REQUEST_ALL_ARTICLE_IDS,
-  INVALIDATE_ALL_ARTICLE_IDS
-} from '../actions/articleIds';
+  RECEIVE_ALL_PAGE_IDS,
+  REQUEST_ALL_PAGE_IDS,
+  INVALIDATE_ALL_PAGE_IDS
+} from '../actions/pageIds';
 
-function articleIds(state = {
+function pageIds(state = {
   isFetching: false,
   isInvalidated: true,
-  articles: []
+  pages: []
 }, action) {
   switch (action.type) {
-    case RECEIVE_ALL_ARTICLE_IDS: {
+    case RECEIVE_ALL_PAGE_IDS: {
       return Object.assign({}, state, {
         isFetching: false,
         isInvalidated: false,
-        articles: action.articleIds,
+        pages: action.pageIds,
         lastUpdated: action.receivedAt
       });
     }
 
-    case REQUEST_ALL_ARTICLE_IDS: {
+    case REQUEST_ALL_PAGE_IDS: {
       return Object.assign({}, state, {
         isFetching: true
       });
     }
 
-    case INVALIDATE_ALL_ARTICLE_IDS: {
+    case INVALIDATE_ALL_PAGE_IDS: {
       return Object.assign({}, state, {
         isInvalidated: true
       });
@@ -36,4 +36,4 @@ function articleIds(state = {
   }
 }
 
-export default articleIds;
+export default pageIds;

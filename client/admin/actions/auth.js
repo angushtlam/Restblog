@@ -79,6 +79,24 @@ export function attemptLogin(username, password) {
   };
 }
 
+export function checkSessionValidity(accessKey) {
+  return function (dispatch) {
+    dispatch(requestSessionValidity(accessKey));
+
+    return fetch('/api/auth/validate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        accessKey
+      })
+    }).then((resp) => { return resp.json(); })
+      .then((json) => { dispatch(receiveSessionValidity(json)); })
+      .catch(() => { console.log('Error in checking user validation.'); });
+  };
+}
+
 export function attemptSessionInvalidation(accessKey) {
   return function (dispatch) {
     dispatch(requestSessionInvalidation(accessKey));

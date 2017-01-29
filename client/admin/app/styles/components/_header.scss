@@ -2,7 +2,7 @@
 
 .header {
   background-color: $color-primary;
-  margin-bottom: $padding;
+  margin-bottom: $padding-large;
 
   .container {
     align-items: center;
@@ -29,7 +29,7 @@
       li {
         display: inline;
         list-style: none;
-        margin-left: $padding;
+        margin-left: $padding-large;
       }
     }
   }

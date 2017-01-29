@@ -11,6 +11,7 @@ function auth(state = {
   accessKey: '',
   isAuthenticated: false,
   isFetching: false,
+  isValidating: true,
   receivedAt: null,
   username: ''
 }, action) {

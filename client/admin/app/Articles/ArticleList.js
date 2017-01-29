@@ -6,9 +6,13 @@ import { Link } from 'react-router';
 class ArticleList extends Component {
   render() {
     return (
-      <ul>
-        { this.renderArticles() }
-      </ul>
+      <div>
+        <h3>My Articles</h3>
+        <p>This is a list of your articles.</p>
+        <ul>
+          { this.renderArticles() }
+        </ul>
+      </div>
     );
   }
 

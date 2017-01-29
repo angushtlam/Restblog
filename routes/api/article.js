@@ -24,11 +24,9 @@ router.post('/get/:id', isAdminAuthenticated, function (req, res) {
   const findId = req.params.id;
 
   Article.findOne({ '_id': findId }).lean().exec(function (err, q) {
-    console.log(q);
     q ? res.json(q) : res.json({});
   });
 });
-
 
 // Pushes a new article to the blog.
 router.post('/push', isAdminAuthenticated, function (req, res) {
