@@ -5,11 +5,15 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 
 // Import Redux
-import { fetchArticleData } from '../actions/articleData';
-import { fetchAllArticleIds } from '../actions/articleIds';
+import { fetchArticleData, invalidateAllArticleData } from '../actions/articleData';
+import { fetchAllArticleIds, invalidateAllArticleIds } from '../actions/articleIds';
 
 // Import custom components
 import Auth from './Auth';
+import Header from './components/Header';
+
+// Import styling
+import './styles/base.scss';
 
 class App extends Component {
   constructor() {
@@ -21,11 +25,17 @@ class App extends Component {
 
   componentDidMount() {
     this.initializeArticleData();
+
+    // Clear data old data, just in case.
+    this.props.invalidateAllArticleIds();
+    this.props.invalidateAllArticleData();
+
   }
 
   componentDidUpdate() {
     this.initializeArticleData();
   }
+
 
   render() {
     // Ask for user to log in if they are not authenticated.
@@ -37,8 +47,11 @@ class App extends Component {
     // Otherwise show them the dashboard.
     return (
       <div>
-        <Link to='/'><h1>Restblog Dashboard</h1></Link>
-        { this.props.children }
+        <Header></Header>
+        <div className='container'>
+          <Link to='/'><h1>Restblog Dashboard</h1></Link>
+          { this.props.children }
+        </div>
       </div>
     );
   }
@@ -59,7 +72,7 @@ class App extends Component {
         articleIds.articles.map((articleId) => {
           const thisArticle = this.props.articleData[articleId];
           if (!thisArticle || (thisArticle.isInvalidated && !thisArticle.isFetching)) {
-            this.props.fetchArticleData(articleId);
+            this.props.fetchArticleData(articleId, this.props.auth.accessKey);
           }
         });
       }
@@ -78,7 +91,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     fetchArticleData,
-    fetchAllArticleIds
+    fetchAllArticleIds,
+    invalidateAllArticleData: () => dispatch(invalidateAllArticleData()),
+    invalidateAllArticleIds: () => dispatch(invalidateAllArticleIds())
   }, dispatch);
 }
 

@@ -1,6 +1,7 @@
 // Import libraries
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 class ArticleList extends Component {
   render() {
@@ -17,8 +18,12 @@ class ArticleList extends Component {
 
     return this.props.articleIds.articles.map((articleId) => {
       const d = this.props.articleData[articleId];
+      const articleHref = '/article/' + articleId;
 
-      return ( <li key={ articleId }>{ d ? d.title : articleId }</li> );
+      return (
+        <li key={ articleId }>
+          <Link to={ articleHref }>{ d ? d.title : articleId }</Link>
+        </li> );
     });
   }
 }

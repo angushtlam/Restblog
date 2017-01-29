@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-  username: { type: String, index: true },
+  accessKey: { type: String, index: true },
+  username: { type: String, unique: true },
   expiry: Date,
   isAdmin: Boolean
 });

@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 // Import Redux actions
+import { invalidateAllArticleData } from '../../actions/articleData';
+import { invalidateAllArticleIds } from '../../actions/articleIds';
 import { attemptLogin } from '../../actions/auth';
 
 class Auth extends Component {
@@ -12,6 +14,12 @@ class Auth extends Component {
 
     // The form related functions need to be bound to this component.
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    // Clear data if the user is not authenticated, just in case.
+    // this.props.invalidateArticleIds();
+    // this.props.invalidateArticleData();
   }
 
   render() {
@@ -51,7 +59,9 @@ function bindStateToProps(state) {
 
 function bindDispatchToProps(dispatch) {
   return bindActionCreators({
-    attemptLogin
+    attemptLogin,
+    invalidateAllArticleData: () => dispatch(invalidateAllArticleData()),
+    invalidateAllArticleIds: () => dispatch(invalidateAllArticleIds())
   }, dispatch);
 }
 

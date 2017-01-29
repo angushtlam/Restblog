@@ -17,18 +17,32 @@ export function receiveArticleData(resp) {
 }
 
 export const REQUEST_ARTICLE_DATA = 'REQUEST_ARTICLE_DATA';
-export function requestArticleData(articleId) {
+export function requestArticleData(articleId, accessKey) {
   return {
     type: REQUEST_ARTICLE_DATA,
-    articleId
+    articleId,
+    accessKey
   };
 }
 
-export function fetchArticleData(articleId) {
-  return function (dispatch) {
-    dispatch(requestArticleData(articleId));
+export const INVALIDATE_ALL_ARTICLE_DATA = 'INVALIDATE_ALL_ARTICLE_DATA';
+export function invalidateAllArticleData() {
+  return {
+    type: INVALIDATE_ALL_ARTICLE_DATA
+  };
+}
 
-    return fetch('/api/article/get/' + articleId)
+export function fetchArticleData(articleId, accessKey) {
+  return function (dispatch) {
+    dispatch(requestArticleData(articleId, accessKey));
+
+    return fetch('/api/article/get/' + articleId, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ accessKey: accessKey })
+    })
       .then((resp) => { return resp.json(); })
       .then((json) => { dispatch(receiveArticleData(json)); })
       .catch(() => { console.log('Error in fetching data for Article ' + articleId + '.'); });

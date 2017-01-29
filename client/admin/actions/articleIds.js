@@ -16,6 +16,13 @@ export function requestAllArticleIds() {
   };
 }
 
+export const INVALIDATE_ALL_ARTICLE_IDS = 'INVALIDATE_ALL_ARTICLE_IDS';
+export function invalidateAllArticleIds() {
+  return {
+    type: INVALIDATE_ALL_ARTICLE_IDS
+  };
+}
+
 export function fetchAllArticleIds() {
   return function (dispatch) {
     dispatch(requestAllArticleIds());

@@ -6,7 +6,7 @@ exports.loadStyles = function (minify) {
           test: /\.scss$/,
           use: [
             'style-loader',
-            'css-loader?modules' + (minify ? ',minimize' : ''),
+            'css-loader' + (minify ? '?minimize' : ''),
             'sass-loader'
           ],
           exclude: /node_modules/

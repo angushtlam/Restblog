@@ -1,4 +1,8 @@
-import { RECEIVE_ARTICLE_DATA, REQUEST_ARTICLE_DATA } from '../actions/articleData';
+import {
+  RECEIVE_ARTICLE_DATA,
+  REQUEST_ARTICLE_DATA,
+  INVALIDATE_ALL_ARTICLE_DATA
+} from '../actions/articleData';
 
 function articleData(state = {}, action) {
   switch (action.type) {
@@ -26,6 +30,10 @@ function articleData(state = {}, action) {
       };
 
       return Object.assign({}, state, articleMap);
+    }
+
+    case INVALIDATE_ALL_ARTICLE_DATA: {
+      return {};
     }
 
     default:

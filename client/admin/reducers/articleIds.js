@@ -1,4 +1,8 @@
-import { RECEIVE_ALL_ARTICLE_IDS, REQUEST_ALL_ARTICLE_IDS } from '../actions/articleIds';
+import {
+  RECEIVE_ALL_ARTICLE_IDS,
+  REQUEST_ALL_ARTICLE_IDS,
+  INVALIDATE_ALL_ARTICLE_IDS
+} from '../actions/articleIds';
 
 function articleIds(state = {
   isFetching: false,
@@ -18,6 +22,12 @@ function articleIds(state = {
     case REQUEST_ALL_ARTICLE_IDS: {
       return Object.assign({}, state, {
         isFetching: true
+      });
+    }
+
+    case INVALIDATE_ALL_ARTICLE_IDS: {
+      return Object.assign({}, state, {
+        isInvalidated: true
       });
     }
 

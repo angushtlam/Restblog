@@ -19,6 +19,17 @@ router.get('/get/:id', function (req, res) {
   });
 });
 
+// Post version requires an accessKey, but returns data for unpublished articles.
+router.post('/get/:id', isAdminAuthenticated, function (req, res) {
+  const findId = req.params.id;
+
+  Article.findOne({ '_id': findId }).lean().exec(function (err, q) {
+    console.log(q);
+    q ? res.json(q) : res.json({});
+  });
+});
+
+
 // Pushes a new article to the blog.
 router.post('/push', isAdminAuthenticated, function (req, res) {
   const findId = req.body.id ? req.body.id : titleToUrlSafeId(req.body.title);

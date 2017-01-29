@@ -1,15 +1,14 @@
 // Import libraries
 import React from 'react';
-
-// Import custom components
-import ArticleList from './ArticleList';
+import { Link } from 'react-router';
 
 class Articles extends React.Component {
   render() {
     return (
       <div>
         <h2>Articles</h2>
-        <ArticleList></ArticleList>
+        <Link to='/articles'>View All</Link>
+        { this.props.children }
       </div>
     );
   }
