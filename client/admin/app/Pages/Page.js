@@ -2,6 +2,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { bindActionCreators } from 'redux';
+
+// Import Redux actions
+import { updatePageData } from '../../actions/pageData';
 
 class Page extends Component {
   constructor(props) {
@@ -13,12 +17,14 @@ class Page extends Component {
       body: '',
       isPublished: false,
       silentUpdate: false,
-      loadInitial: false
+      loadInitial: false,
+      receivedAt: new Date()
     };
 
     // Bind to custom component functions.
     this.loadInitialData = this.loadInitialData.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleForm = this.handleForm.bind(this);
   }
 
   componentDidMount() {
@@ -34,12 +40,14 @@ class Page extends Component {
     const d = this.props.pageData[pageId];
 
     if (this.state.loadInitial && this.props.pageData && d) {
+      const fetchingMessage = d.isFetching ? '...' : 'k';
+
       return (
         <div>
           <h3>{ this.state.title }</h3>
           <p>You are now updating this page.</p>
 
-          <form className='edit'>
+          <form className='edit' onSubmit={this.handleForm} >
             <label>Title</label>
             <input disabled={ !this.state.loadInitial }
                    name='title'
@@ -58,12 +66,12 @@ class Page extends Component {
 
             <label>Body</label>
             <textarea disabled={ !this.state.loadInitial }
-                      id='body'
+                      name='body'
                       onChange={ this.handleInputChange }
                       placeholder='Body'
                       value={ this.state.body }></textarea>
 
-            <button className='button float-right' type='submit'>Update</button>
+            <button className='button float-right' type='submit'>Update { fetchingMessage }</button>
 
             <input disabled={ !this.state.loadInitial }
                    checked={ this.state.isPublished }
@@ -104,13 +112,16 @@ class Page extends Component {
     const pageId = this.props.params['pageId'];
     const d = this.props.pageData[pageId];
 
-    if (!this.state.loadInitial && this.props.pageData && d) {
-      // Want To Buy: Javascript String cloning.
+    // TODO: There is probably some kind of logical simplification I can do here.
+    const isOutdated = !this.state.loadInitial || (d !== undefined && this.state.receivedAt < d.receivedAt);
+    if (this.props.pageData && d && isOutdated) {
+      // Want To Buy: Javascript object cloning. Well I guess to be fair it's all client side so its k...
       this.setState({
         title: JSON.parse(JSON.stringify(d.title)),
         subtitle: JSON.parse(JSON.stringify(d.subtitle)),
         body: JSON.parse(JSON.stringify(d.body)),
         isPublished: JSON.parse(JSON.stringify(d.isPublished)),
+        receivedAt: JSON.parse(JSON.stringify(d.receivedAt)),
         loadInitial: true
       });
     }
@@ -125,12 +136,32 @@ class Page extends Component {
       [name]: value
     });
   }
+
+  handleForm(event) {
+    event.preventDefault();
+
+    const pageId = this.props.params['pageId'];
+    this.props.updatePageData(pageId, {
+      title: this.state.title,
+      subtitle: this.state.subtitle,
+      body: this.state.body,
+      isPublished: this.state.isPublished,
+      silentUpdate: this.state.silentUpdate
+    }, this.props.auth.accessKey);
+  }
 }
 
 function mapStateToProps(state) {
   return {
+    auth: state.auth,
     pageData: state.pageData
   };
 }
 
-export default connect(mapStateToProps)(Page);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    updatePageData
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Page);

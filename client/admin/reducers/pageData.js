@@ -9,10 +9,10 @@ function pageData(state = {}, action) {
     case RECEIVE_PAGE_DATA: {
       let pageMap = {};
       pageMap[action.pageId] = {
-        isFetching: false,
         author: action.author,
         body: action.body,
         createdAt: action.createdAt,
+        isFetching: false,
         isPublished: action.isPublished,
         lastUpdated: action.lastUpdated,
         receivedAt: action.receivedAt,

@@ -56,6 +56,27 @@ router.post('/push', isAdminAuthenticated, function (req, res) {
   });
 });
 
+// Pushes a new page to the blog.
+router.post('/update/:id', isAdminAuthenticated, function (req, res) {
+  const findId = req.params.id;
+
+  const updateMap = {};
+  if (req.body.title) updateMap['title'] = req.body.title;
+  if (req.body.subtitle) updateMap['subtitle'] = req.body.subtitle;
+  if (req.body.body) updateMap['body'] = req.body.body;
+  if (!req.body.silentUpdate) updateMap['lastUpdated'] = new Date();
+  updateMap['isPublished'] = req.body.isPublished;
+
+  Page.findOneAndUpdate({ _id: findId }, updateMap).exec((err, q) => {
+    if (!q) {
+      res.json({ responseCode: 'ERROR', responseMessage: 'You cannot update an article that does not exist. Try creating it first.' });
+    } else {
+      res.json({ responseCode: 'SUCCESS', responseMessage: 'The page is successfully updated.' });
+    }
+  });
+
+});
+
 // Deletes a page by its ID.
 router.post('/delete/:id', isAdminAuthenticated, function (req, res) {
   const findId = req.params.id;

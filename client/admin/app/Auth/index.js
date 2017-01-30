@@ -13,7 +13,7 @@ class Auth extends Component {
     super();
 
     // The form related functions need to be bound to this component.
-    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
+    this.handleForm = this.handleForm.bind(this);
   }
 
   render() {
@@ -23,7 +23,7 @@ class Auth extends Component {
           <h1 className='logo'>Restblog</h1>
           <p>Restricted Access</p>
 
-          <form onSubmit={ this.handleLoginSubmit }>
+          <form onSubmit={ this.handleForm }>
             <label>
               Username
               <input type='text' name='username' ref={ (input) => this.username = input } />
@@ -43,7 +43,7 @@ class Auth extends Component {
     );
   }
 
-  handleLoginSubmit(event) {
+  handleForm(event) {
     event.preventDefault();
     this.props.attemptLogin(this.username.value, this.password.value);
   }

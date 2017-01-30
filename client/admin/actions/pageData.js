@@ -17,11 +17,10 @@ export function receivePageData(resp) {
 }
 
 export const REQUEST_PAGE_DATA = 'REQUEST_PAGE_DATA';
-export function requestPageData(pageId, accessKey) {
+export function requestPageData(pageId) {
   return {
     type: REQUEST_PAGE_DATA,
-    pageId,
-    accessKey
+    pageId
   };
 }
 
@@ -34,7 +33,7 @@ export function invalidateAllPageData() {
 
 export function fetchPageData(pageId, accessKey) {
   return function (dispatch) {
-    dispatch(requestPageData(pageId, accessKey));
+    dispatch(requestPageData(pageId));
 
     return fetch('/api/page/get/' + pageId, {
       method: 'POST',
@@ -54,4 +53,30 @@ export function shouldFetchPageData(state, pageId) {
   if (!state.pageData || !pageData) return true;
   else if (pageData.isFetching()) return false;
   else return pageData.isInvalidated();
+}
+
+export function updatePageData(pageId, pageData, accessKey) {
+  return function (dispatch) {
+    dispatch(requestPageData(pageId));
+
+    const postMap = { accessKey };
+    if (pageData.title) postMap['title'] = pageData.title;
+    if (pageData.subtitle) postMap['subtitle'] = pageData.subtitle;
+    if (pageData.body) postMap['body'] = pageData.body;
+    if (pageData.isPublished) postMap['isPublished'] = pageData.isPublished;
+    if (pageData.silentUpdate) postMap['silentUpdate'] = pageData.silentUpdate;
+
+    console.log(postMap);
+
+    return fetch('/api/page/update/' + pageId, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postMap)
+    })
+      .then((resp) => { return resp.json(); })
+      .then(() => { dispatch(fetchPageData(pageId, accessKey)); })
+      .catch(() => { console.log('Error in updating data for Page ' + pageId + '.'); });
+  };
 }
