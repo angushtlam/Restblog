@@ -6,12 +6,12 @@ const mongoose = require('mongoose');
 
 // Custom imports.
 // const { requireAdminAuthentication } = require('../../middlewares/auth');
-const configJson = require('../../config.json');
+const configFile = require('../../config.js');
 const User = require('../../db/models/user');
 const Session = require('../../db/models/session');
 
 // Constants
-const secretKey = configJson.secretKey;
+const secretKey = configFile.getConfig().SECRET_KEY;
 
 // Defining middleware for this router.
 router.post('/verify', function (req, res) {
@@ -26,7 +26,7 @@ router.post('/verify', function (req, res) {
       const isAdmin = q.isAdmin;
 
       // Remove all older entries of user.
-      Session.find({ 'username': findUsername }).remove((err, q) => {
+      Session.find({ 'username': findUsername }).remove((err) => {
         if (err) {
           console.log(err);
           res.json({ responseCode: 'ERROR', responseMessage: 'Internal server error.' });

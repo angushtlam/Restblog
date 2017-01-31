@@ -15,7 +15,7 @@ import Auth from './Auth';
 import Header from './components/Header';
 
 // Import styling
-import './styles/base.scss';
+import '../styles/admin.scss';
 
 class App extends Component {
   constructor() {

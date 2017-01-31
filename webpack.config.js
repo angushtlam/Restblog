@@ -17,8 +17,8 @@ const paths = {
 const config = merge([
   {
     entry: {
-      admin: paths.admin,
-      app: paths.app
+      admin: paths.admin
+      // app: paths.app
     },
     output: {
       path: paths.build,

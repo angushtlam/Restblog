@@ -1,0 +1,4 @@
+1. App needs to be simplified, possibly need to remove extra crap
+2. Use some kind of templating engine to customize website.
+3. Create React elements to be included in the templates via include
+4. Wrap the whole thing into 1 node module. WEBPACK NEEDS TO RUN WITH EXPRESS OR AT LEAST BEFORE

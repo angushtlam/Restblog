@@ -6,36 +6,55 @@ const express = require('express');
 const path = require('path');
 
 // Custom imports.
-const db = require('./db');
+const configFile = require('./config');
+const database = require('./db');
 const Session = require('./db/models/session');
 
 // Route imports.
 const api = require('./routes/api');
 const index = require('./routes/index');
 
-// Constants
-const PORT = 3000;
+class Restblog {
+  init() {
+    startServer();
+  }
 
-// Initiate Express app.
-const app = express();
+  setConfig(config) {
+    configFile.setConfig(config);
+  }
+}
 
-// Load external middlewares
-app.use(bodyParser.json());
+function startServer() {
+  // Initiate Express app.
+  const app = express();
 
-// Handle static files
-app.use('/static', express.static(path.join(__dirname, 'public', 'static')));
+  // Use Pug for templating.
+  app.set('view engine', 'pug');
 
-// Load routes that the app uses.
-app.use('/', index);
-app.use('/api', api);
+  // Load external middlewares
+  app.use(bodyParser.json());
 
-// Wait for database connection.
-db.once('open', function() {
-  // Clear all sessions on restart for security.
-  console.log(('Dropping sessions on startup for security.').green);
-  Session.collection.drop();
+  // Handle static files
+  app.use('/static', express.static(path.join(__dirname, 'public', 'static')));
 
-  app.listen(PORT, function () {
-    console.log(('Database connected. App now listening on port ' + PORT + '.').green);
+  // Load routes that the app uses.
+  app.use('/', index);
+  app.use('/api', api);
+
+  // Start database connection.
+  const c = configFile.getConfig();
+  const db = database.connect(c.DATABASE_URI);
+
+  db.once('open', function() {
+    // Clear all sessions on restart for security.
+    console.log(('Dropping sessions on startup for security.').green);
+    Session.collection.drop();
+
+    app.listen(c.PORT, function () {
+      console.log(('Database connected').green);
+      console.log(('Restblog now listening on port ' + c.PORT + '.').green);
+    });
   });
-});
+}
+
+module.exports = Restblog;

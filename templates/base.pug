@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    title #{sitename} - #{title}
+    include components/meta.pug
+    style
+      include:scss styles/base.scss
+      block styles
+    block pre_scripts
+  body
+    block content
+    include components/footer.pug
+    block scripts
+    block post_scripts

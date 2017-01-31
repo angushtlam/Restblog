@@ -3,15 +3,17 @@ const mongoose = require('mongoose');
 const sha256 = require('js-sha256');
 
 // Custom imports.
-const configJson = require('../config.json');
-const db = require('../db');
+const configFile = require('../config.js');
+const database = require('../db');
 const Article = require('../db/models/article');
 const Page = require('../db/models/page');
 const User = require('../db/models/user');
 
 // Constants
-const secretKey = configJson.secretKey;
+const secretKey = configFile.getConfig().SECRET_KEY;
+const mongoDbUri = configFile.getConfig().DATABASE_URI;
 
+const db = database.connect(mongoDbUri);
 db.once('open', function () {
   // Wipe old database first.
   console.log('Dropping database.');
