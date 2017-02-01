@@ -12,6 +12,7 @@ const Session = require('./db/models/session');
 
 // Route imports.
 const api = require('./routes/api');
+const admin = require('./routes/admin');
 const index = require('./routes/index');
 
 class Restblog {
@@ -38,8 +39,14 @@ function startServer() {
   app.use('/static', express.static(path.join(__dirname, 'public', 'static')));
 
   // Load routes that the app uses.
-  app.use('/', index);
   app.use('/api', api);
+  app.use('/', admin);
+  app.use('/', index);
+
+  // Handle error 404s.
+  app.use(function (req, res) {
+    res.status(404).send('Sorry, that page doesn\'t exist!');
+  });
 
   // Start database connection.
   const c = configFile.getConfig();
